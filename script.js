@@ -243,6 +243,7 @@ function submitForm() {
     const form = document.getElementById('confirmationForm');
     const successMessage = document.getElementById('successMessage');
     const formAction = form.getAttribute('action');
+    const ownerWhatsapp = (form.getAttribute('data-owner-whatsapp') || '').trim();
 
     const formData = new FormData(form);
     const confirmation = {
@@ -250,10 +251,12 @@ function submitForm() {
         attendance: (formData.get('attendance') || '').toString().trim(),
         guests: (formData.get('guests') || '').toString().trim(),
         message: (formData.get('message') || '').toString().trim(),
+        songSuggestion: (formData.get('songSuggestion') || '').toString().trim(),
         createdAt: new Date().toLocaleString('es-UY', { timeZone: 'America/Montevideo' })
     };
 
     saveConfirmationToList(confirmation);
+    sendConfirmationToWhatsApp(ownerWhatsapp, confirmation);
 
     const hasFormspree = formAction && !formAction.includes('REEMPLAZAR');
 
@@ -267,7 +270,11 @@ function submitForm() {
         });
     }
 
-    successMessage.innerHTML = '✓ ¡Confirmación enviada! Podés verla en <a href="./confirmaciones.html" style="color: inherit; text-decoration: underline;">la lista de confirmaciones</a>. 🎉';
+    if (ownerWhatsapp && !ownerWhatsapp.includes('X')) {
+        successMessage.innerHTML = '✓ ¡Confirmación enviada con tu canción sugerida! También se notificó por WhatsApp. 🎉';
+    } else {
+        successMessage.innerHTML = '✓ ¡Confirmación enviada con tu canción sugerida! 🎉';
+    }
     successMessage.classList.add('show');
 
     setTimeout(function() {
@@ -290,6 +297,26 @@ function saveConfirmationToList(confirmation) {
     } catch (error) {
         console.error('No se pudo guardar la confirmacion en la lista local:', error);
     }
+}
+
+function sendConfirmationToWhatsApp(ownerWhatsapp, confirmation) {
+    if (!ownerWhatsapp || ownerWhatsapp.includes('X')) return;
+
+    const cleanNumber = ownerWhatsapp.replace(/\D/g, '');
+    if (!cleanNumber) return;
+
+    const text = [
+        'Nueva confirmacion de Catalina XV',
+        'Nombre: ' + (confirmation.name || '-'),
+        'Asistencia: ' + (confirmation.attendance || '-'),
+        'Personas: ' + (confirmation.guests || '-'),
+        'Cancion: ' + (confirmation.songSuggestion || '-'),
+        'Mensaje: ' + (confirmation.message || '-'),
+        'Fecha: ' + (confirmation.createdAt || '-')
+    ].join('\n');
+
+    const url = 'https://wa.me/' + cleanNumber + '?text=' + encodeURIComponent(text);
+    window.open(url, '_blank');
 }
 
 function showError(message) {

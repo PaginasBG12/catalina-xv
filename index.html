@@ -260,10 +260,7 @@
                 <button class="button button-primary music-main-btn" onclick="window.open('https://youtu.be/cNGjD0VG4R8?si=9BbWEHxldFso3UJP', '_blank')">
                     ▶ ESCUCHAR CANCIÓN
                 </button>
-                <p class="music-question">¿Qué canción no puede faltar en la playlist?</p>
-                <button class="button button-secondary" onclick="window.open('https://wa.me/?text=Hola%20Cata%2C%20mi%20canci%C3%B3n%20para%20tu%20fiesta%20es%3A%20', '_blank')">
-                    SUGERIR CANCIÓN
-                </button>
+                <p class="music-question">La canción que sugerís se envía junto con tu confirmación.</p>
             </div>
         </section>
 
@@ -295,7 +292,7 @@
                 </p>
                 <a href="#confirmationForm" class="button button-primary confirmation-quick-btn">CLIC AQUÍ</a>
                 
-                <form class="confirmation-form" id="confirmationForm" method="POST" action="https://formspree.io/f/REEMPLAZAR">
+                <form class="confirmation-form" id="confirmationForm" method="POST" action="https://formspree.io/f/REEMPLAZAR" data-owner-whatsapp="598XXXXXXXXX">
                     
                     <!-- Nombre y Apellido -->
                     <div class="form-group">
@@ -349,6 +346,18 @@
                             placeholder="Dejá un mensaje (opcional)"
                             rows="4"
                         ></textarea>
+                    </div>
+
+                    <!-- Canción sugerida -->
+                    <div class="form-group">
+                        <label for="songSuggestion">Canción sugerida para la playlist</label>
+                        <input
+                            type="text"
+                            id="songSuggestion"
+                            name="songSuggestion"
+                            class="form-input"
+                            placeholder="Ej: Artista - Nombre de la canción"
+                        >
                     </div>
 
                     <button type="submit" class="button button-primary form-submit">
