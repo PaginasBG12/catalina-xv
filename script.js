@@ -239,11 +239,10 @@ function validateForm() {
     return isFormValid;
 }
 
-function submitForm() {
+async function submitForm() {
     const form = document.getElementById('confirmationForm');
     const successMessage = document.getElementById('successMessage');
-    const formAction = form.getAttribute('action');
-    const ownerWhatsapp = (form.getAttribute('data-owner-whatsapp') || '').trim();
+    const googleSheetUrl = (form.getAttribute('data-google-sheet-url') || '').trim();
 
     const formData = new FormData(form);
     const confirmation = {
@@ -256,24 +255,14 @@ function submitForm() {
     };
 
     saveConfirmationToList(confirmation);
-    sendConfirmationToWhatsApp(ownerWhatsapp, confirmation);
+    const sentToGoogleSheet = await sendConfirmationToGoogleSheet(googleSheetUrl, confirmation);
 
-    const hasFormspree = formAction && !formAction.includes('REEMPLAZAR');
-
-    if (hasFormspree) {
-        fetch(formAction, {
-            method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: formData
-        }).catch(function(err) {
-            console.error('No se pudo enviar a Formspree:', err);
-        });
-    }
-
-    if (ownerWhatsapp && !ownerWhatsapp.includes('X')) {
-        successMessage.innerHTML = '✓ ¡Confirmación enviada con tu canción sugerida! También se notificó por WhatsApp. 🎉';
+    if (googleSheetUrl && !googleSheetUrl.includes('PEGAR_URL') && sentToGoogleSheet) {
+        successMessage.textContent = '✓ ¡Confirmación enviada con tu canción sugerida! Ya quedó en la hoja compartida. 🎉';
+    } else if (googleSheetUrl && !googleSheetUrl.includes('PEGAR_URL')) {
+        successMessage.textContent = '✓ Confirmación guardada. No se pudo verificar el envío a Google Sheets, revisá la URL del Web App.';
     } else {
-        successMessage.innerHTML = '✓ ¡Confirmación enviada con tu canción sugerida! 🎉';
+        successMessage.textContent = '✓ Confirmación guardada. Falta pegar la URL del Web App de Google Sheets para compartir la lista.';
     }
     successMessage.classList.add('show');
 
@@ -299,24 +288,32 @@ function saveConfirmationToList(confirmation) {
     }
 }
 
-function sendConfirmationToWhatsApp(ownerWhatsapp, confirmation) {
-    if (!ownerWhatsapp || ownerWhatsapp.includes('X')) return;
+async function sendConfirmationToGoogleSheet(googleSheetUrl, confirmation) {
+    if (!googleSheetUrl || googleSheetUrl.includes('PEGAR_URL')) return false;
 
-    const cleanNumber = ownerWhatsapp.replace(/\D/g, '');
-    if (!cleanNumber) return;
+    const payload = new URLSearchParams({
+        createdAt: confirmation.createdAt || '',
+        name: confirmation.name || '',
+        attendance: confirmation.attendance || '',
+        guests: confirmation.guests || '',
+        songSuggestion: confirmation.songSuggestion || '',
+        message: confirmation.message || ''
+    });
 
-    const text = [
-        'Nueva confirmacion de Catalina XV',
-        'Nombre: ' + (confirmation.name || '-'),
-        'Asistencia: ' + (confirmation.attendance || '-'),
-        'Personas: ' + (confirmation.guests || '-'),
-        'Cancion: ' + (confirmation.songSuggestion || '-'),
-        'Mensaje: ' + (confirmation.message || '-'),
-        'Fecha: ' + (confirmation.createdAt || '-')
-    ].join('\n');
-
-    const url = 'https://wa.me/' + cleanNumber + '?text=' + encodeURIComponent(text);
-    window.open(url, '_blank');
+    try {
+        await fetch(googleSheetUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: payload.toString()
+        });
+        return true;
+    } catch (error) {
+        console.error('No se pudo enviar a Google Sheets:', error);
+        return false;
+    }
 }
 
 function showError(message) {
