@@ -300,9 +300,10 @@
                 <p class="section-description">
                     Poné play para entrar en el clima de mi fiesta.
                 </p>
-                <button class="button button-primary music-main-btn" onclick="window.open('https://youtu.be/cNGjD0VG4R8?si=9BbWEHxldFso3UJP', '_blank')">
-                    ▶ ESCUCHAR CANCIÓN
-                </button>
+                <audio class="music-audio" controls preload="none">
+                    <source src="./assets/perfect.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el reproductor de audio.
+                </audio>
                 <p class="music-question">La canción que sugerís se envía junto con tu confirmación.</p>
             </div>
         </section>
@@ -423,18 +424,6 @@
         </footer>
 
     </main>
-
-    <!-- REPRODUCTOR DE MÚSICA - FLOTANTE -->
-    <audio id="backgroundMusic" loop>
-        <!-- La música se reproducirá desde la canción de YouTube si lo permiten los permisos -->
-    </audio>
-
-    <div class="music-player" id="musicPlayer">
-        <button class="music-toggle" id="musicToggle" aria-label="Reproducir música">
-            <span class="music-icon">🎵</span>
-        </button>
-        <div class="music-info">Poné play</div>
-    </div>
 
     <script src="script.js"></script>
 </body>
