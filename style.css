@@ -2402,3 +2402,146 @@ section {
         font-size: clamp(3rem, 14vw, 4.4rem);
     }
 }
+
+/* ============================================
+   MATCH REFERENCIA - CAPA FINAL
+   ============================================ */
+.splash-screen {
+    display: none !important;
+}
+
+.main-content,
+.main-content.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body {
+    background:
+        radial-gradient(circle at 50% -10%, rgba(212, 165, 116, 0.2) 0%, transparent 55%),
+        linear-gradient(180deg, #f6efe6 0%, #f3eadf 100%);
+    color: #2f2216;
+}
+
+.hero {
+    min-height: 100svh;
+    align-items: end;
+    padding-bottom: clamp(2rem, 8vw, 5rem);
+}
+
+.hero-content {
+    max-width: 860px;
+}
+
+.hero-card {
+    border-radius: 22px;
+    border: 1px solid rgba(116, 84, 52, 0.5);
+    background: linear-gradient(180deg, rgba(255, 249, 239, 0.88) 0%, rgba(244, 232, 215, 0.84) 100%);
+    box-shadow: 0 20px 48px rgba(49, 35, 22, 0.22);
+}
+
+.hero-title {
+    font-size: clamp(2.4rem, 6.5vw, 4rem);
+    letter-spacing: 4px;
+}
+
+.hero-name {
+    font-size: clamp(4.2rem, 13vw, 7.1rem);
+    letter-spacing: 0;
+    line-height: 0.86;
+    color: #6f4c2b;
+}
+
+.hero-script {
+    font-size: clamp(1.9rem, 4.6vw, 2.8rem);
+    color: #84603b;
+}
+
+.hero-details {
+    gap: clamp(1rem, 3vw, 2.6rem);
+}
+
+.section-title {
+    font-size: clamp(2.1rem, 5.8vw, 3.25rem);
+    letter-spacing: 1.5px;
+}
+
+.section-subtitle {
+    font-size: clamp(2rem, 5.2vw, 2.8rem);
+    line-height: 1;
+}
+
+.message-section .container,
+.gallery-section .container,
+.countdown-section .container,
+.signature-section .container,
+.event-details-section .container,
+.album-section .container,
+.music-section .container,
+.dresscode-section .container,
+.gifts-section .container,
+.confirmation-section .container {
+    max-width: 920px;
+    border-radius: 20px;
+}
+
+.gallery-grid {
+    margin-top: clamp(1.25rem, 4vw, 2.3rem);
+}
+
+.gallery-item {
+    box-shadow: 0 12px 30px rgba(61, 44, 27, 0.19);
+}
+
+.gallery-item-featured {
+    --rot: -2.8deg;
+}
+
+.gallery-item:nth-child(2) {
+    --rot: 2.8deg;
+}
+
+.gallery-item:nth-child(3) {
+    --rot: -2.1deg;
+}
+
+.gallery-item:nth-child(4) {
+    --rot: 2.3deg;
+}
+
+.gallery-item:nth-child(5) {
+    --rot: -2.5deg;
+}
+
+.gallery-item:nth-child(6) {
+    --rot: 2.4deg;
+}
+
+.button {
+    border-radius: 999px;
+    letter-spacing: 1.6px;
+}
+
+.music-player {
+    right: 16px;
+    bottom: 16px;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 92svh;
+        align-items: center;
+    }
+
+    .hero-name {
+        font-size: clamp(3rem, 13vw, 5.2rem);
+    }
+
+    .section-title {
+        font-size: clamp(1.8rem, 8vw, 2.35rem);
+    }
+
+    .section-subtitle {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+}
