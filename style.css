@@ -2243,3 +2243,77 @@ section {
         min-height: 170px;
     }
 }
+
+/* ============================================
+   AJUSTE ULTRA FINO FINAL
+   ============================================ */
+:root {
+    --gold-ink: #876341;
+    --gold-soft: #b08a61;
+    --gold-line: rgba(149, 113, 74, 0.45);
+}
+
+section {
+    padding-top: clamp(2.8rem, 7vw, 5.2rem);
+    padding-bottom: clamp(2.8rem, 7vw, 5.2rem);
+}
+
+.hero {
+    padding-top: clamp(2.2rem, 5vw, 3.8rem);
+    padding-bottom: clamp(2.2rem, 5vw, 3.8rem);
+}
+
+.section-title {
+    font-size: clamp(2.05rem, 5.4vw, 2.95rem);
+    letter-spacing: 1.2px;
+    color: #322214;
+}
+
+.section-title::before,
+.section-title::after {
+    background: var(--gold-line);
+}
+
+.hero-subtitle,
+.dresscode-label,
+.gift-label,
+.hero-detail-label {
+    color: var(--gold-ink);
+}
+
+.hero-divider {
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(135, 99, 65, 0.3),
+        rgba(135, 99, 65, 0.3) 9px,
+        transparent 9px,
+        transparent 18px
+    );
+}
+
+.hero-footer-text,
+.countdown-message,
+.section-description,
+.message-text {
+    color: rgba(62, 45, 28, 0.86);
+}
+
+.button-primary {
+    background: linear-gradient(135deg, #7e5d39 0%, var(--gold-soft) 100%);
+}
+
+.gallery-item {
+    box-shadow: 0 12px 24px rgba(67, 49, 31, 0.16);
+    border-color: rgba(133, 102, 66, 0.32);
+}
+
+@media (max-width: 640px) {
+    section {
+        padding-top: clamp(2rem, 8vw, 2.8rem);
+        padding-bottom: clamp(2rem, 8vw, 2.8rem);
+    }
+
+    .section-title {
+        font-size: clamp(1.7rem, 7.2vw, 2.1rem);
+    }
+}
