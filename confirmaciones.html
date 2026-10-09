@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmaciones | Catalina XV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-content visible confirmation-list-page">
+        <section class="confirmation-list-section">
+            <div class="container confirmation-list-container">
+                <h1 class="section-title">Confirmaciones</h1>
+                <p class="section-description">Listado de respuestas recibidas desde el formulario.</p>
+
+                <div class="confirmation-actions">
+                    <button class="button button-secondary" id="exportCsvBtn">Exportar CSV</button>
+                    <button class="button button-secondary" id="clearListBtn">Limpiar lista</button>
+                    <a class="button button-primary" href="./index.html">Volver a la invitación</a>
+                </div>
+
+                <div class="confirmation-table-wrap">
+                    <table class="confirmation-table" id="confirmationTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Nombre</th>
+                                <th>Asistencia</th>
+                                <th>Personas</th>
+                                <th>Mensaje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="confirmationTableBody"></tbody>
+                    </table>
+                    <p class="empty-list" id="emptyListMsg">Todavía no hay confirmaciones guardadas.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="confirmaciones.js"></script>
+</body>
+</html>

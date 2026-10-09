@@ -244,30 +244,52 @@ function submitForm() {
     const successMessage = document.getElementById('successMessage');
     const formAction = form.getAttribute('action');
 
-    // Verificar que el endpoint de Formspree esté configurado
-    if (formAction.includes('REEMPLAZAR')) {
-        showError('❌ El formulario no está configurado. Por favor, reemplazá "REEMPLAZAR" con tu endpoint de Formspree.');
-        return;
+    const formData = new FormData(form);
+    const confirmation = {
+        name: (formData.get('name') || '').toString().trim(),
+        attendance: (formData.get('attendance') || '').toString().trim(),
+        guests: (formData.get('guests') || '').toString().trim(),
+        message: (formData.get('message') || '').toString().trim(),
+        createdAt: new Date().toLocaleString('es-UY', { timeZone: 'America/Montevideo' })
+    };
+
+    saveConfirmationToList(confirmation);
+
+    const hasFormspree = formAction && !formAction.includes('REEMPLAZAR');
+
+    if (hasFormspree) {
+        fetch(formAction, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: formData
+        }).catch(function(err) {
+            console.error('No se pudo enviar a Formspree:', err);
+        });
     }
 
-    // Aquí el formulario se enviaría a Formspree automáticamente
-    // debido al atributo method="POST" y action del formulario
-
-    // Mostrar mensaje de éxito temporalmente
-    successMessage.textContent = '✓ ¡Confirmación enviada! Gracias por confirmar tu asistencia. 🎉';
+    successMessage.textContent = '✓ ¡Confirmación enviada! Podés verla en la lista de confirmaciones. 🎉';
     successMessage.classList.add('show');
 
-    // Limpiar formulario después de 3 segundos
     setTimeout(function() {
         form.reset();
         successMessage.classList.remove('show');
-        
-        // Limpiar errores
+
         const inputs = form.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
             input.classList.remove('error');
         });
     }, 3000);
+}
+
+function saveConfirmationToList(confirmation) {
+    const storageKey = 'catalinaXVConfirmaciones';
+    try {
+        const current = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        current.push(confirmation);
+        localStorage.setItem(storageKey, JSON.stringify(current));
+    } catch (error) {
+        console.error('No se pudo guardar la confirmacion en la lista local:', error);
+    }
 }
 
 function showError(message) {
