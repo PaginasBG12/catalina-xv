@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="description" content="Invitación digital a los 15 años de Catalina - 15 de noviembre de 2026.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Catalina | Mis 15 años">
+    <meta property="og:description" content="Te invito a celebrar mis 15 años. Domingo 15 de noviembre de 2026 a las 21:00 hs.">
+    <meta property="og:type" content="website">
+    
+    <title>Catalina | Mis 15 años</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23d4a574' font-family='Cormorant Garamond'>✨</text></svg>">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- PANTALLA INICIAL / SPLASH SCREEN -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-subtitle">INVITACIÓN ESPECIAL</div>
+            <h1 class="splash-name">Catalina</h1>
+            <p class="splash-occasion">Mis 15 años</p>
+            <button class="button button-primary splash-button" id="openInvitationBtn">
+                ABRIR INVITACIÓN
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content" id="mainContent">
+        
+        <!-- HERO / PORTADA -->
+        <section class="hero">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-label">MIS</div>
+                    <h1 class="hero-title">15 AÑOS</h1>
+                    <p class="hero-name">Catalina</p>
+                </div>
+                <div class="hero-date">15 · 11 · 2026 | 21:00 HS</div>
+            </div>
+        </section>
+
+        <!-- MENSAJE -->
+        <section class="message-section">
+            <div class="container">
+                <h2 class="section-title message-title">Quiero compartirlo con vos</h2>
+                <p class="message-text">
+                    Hay momentos que se vuelven inolvidables cuando los compartimos con las personas que queremos. Por eso, me encantaría que seas parte de una noche muy especial.
+                </p>
+            </div>
+        </section>
+
+        <!-- CUENTA REGRESIVA -->
+        <section class="countdown-section">
+            <div class="container">
+                <h2 class="section-title">Faltan</h2>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">0</span>
+                        <span class="countdown-label">DÍAS</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">0</span>
+                        <span class="countdown-label">HORAS</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">0</span>
+                        <span class="countdown-label">MINUTOS</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">0</span>
+                        <span class="countdown-label">SEGUNDOS</span>
+                    </div>
+                </div>
+                <p class="countdown-message" id="countdownMessage"></p>
+            </div>
+        </section>
+
+        <!-- FECHA Y LUGAR -->
+        <section class="event-details-section">
+            <div class="container">
+                <div class="event-cards">
+                    <!-- Tarjeta Fecha -->
+                    <div class="event-card">
+                        <div class="event-card-icon">📅</div>
+                        <h3 class="event-card-title">FECHA Y HORA</h3>
+                        <p class="event-card-text">Domingo 15 de noviembre de 2026</p>
+                        <p class="event-card-text">21:00 horas</p>
+                    </div>
+
+                    <!-- Tarjeta Ubicación -->
+                    <div class="event-card">
+                        <div class="event-card-icon">📍</div>
+                        <h3 class="event-card-title">CELEBRAMOS EN</h3>
+                        <p class="event-card-text">Salón Los Álamos</p>
+                        <button class="button button-secondary" onclick="window.open('https://maps.app.goo.gl/uQXj8zUwryzZgx9c7?g_st=iwb', '_blank')">
+                            VER UBICACIÓN
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ÁLBUM -->
+        <section class="album-section">
+            <div class="container">
+                <h2 class="section-title">RECUERDOS</h2>
+                <h3 class="section-subtitle">Mi álbum</h3>
+                <p class="section-description">
+                    Te invito a conocer algunos de mis momentos y recuerdos.
+                </p>
+                <button class="button button-primary" onclick="window.open('https://photos.app.goo.gl/pCmWnvNhmuVXWXJcA', '_blank')">
+                    VER ÁLBUM DE FOTOS
+                </button>
+            </div>
+        </section>
+
+        <!-- MÚSICA -->
+        <section class="music-section">
+            <div class="container">
+                <h2 class="section-title">UNA CANCIÓN ESPECIAL</h2>
+                <h3 class="section-subtitle">Mi música</h3>
+                <p class="section-description">
+                    Podés escuchar la canción elegida para acompañar esta invitación.
+                </p>
+                <button class="button button-primary" onclick="window.open('https://youtu.be/cNGjD0VG4R8?si=9BbWEHxldFso3UJP', '_blank')">
+                    ▶ ESCUCHAR CANCIÓN
+                </button>
+            </div>
+        </section>
+
+        <!-- REGALOS -->
+        <section class="gifts-section">
+            <div class="container">
+                <h2 class="section-title">SI DESEÁS HACERME UN REGALO</h2>
+                <h3 class="section-subtitle">Un detalle para mí</h3>
+                <p class="section-description">
+                    Si querés acompañarme con un regalo, podés hacerlo a través de:
+                </p>
+                <div class="gift-card">
+                    <p class="gift-label">PREX</p>
+                    <p class="gift-number" id="prexNumber">1308674</p>
+                    <button class="button button-secondary" id="copyPrexBtn">
+                        COPIAR NÚMERO
+                    </button>
+                    <p class="copy-success-message" id="copySuccessMessage">¡Número copiado!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONFIRMACIÓN DE ASISTENCIA -->
+        <section class="confirmation-section">
+            <div class="container">
+                <h2 class="section-title">¿Vas a acompañarme?</h2>
+                <p class="section-description confirmation-description">
+                    Confirmá tu asistencia hasta el 30 de octubre de 2026.
+                </p>
+                
+                <form class="confirmation-form" id="confirmationForm" method="POST" action="https://formspree.io/f/REEMPLAZAR">
+                    
+                    <!-- Nombre y Apellido -->
+                    <div class="form-group">
+                        <label for="name">Nombre y apellido <span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="form-input" 
+                            placeholder="Tu nombre y apellido"
+                            required
+                        >
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <!-- ¿Vas a asistir? -->
+                    <div class="form-group">
+                        <label for="attendance">¿Vas a asistir? <span class="required">*</span></label>
+                        <select id="attendance" name="attendance" class="form-select" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Sí, voy a asistir">Sí, voy a asistir</option>
+                            <option value="No voy a poder asistir">No voy a poder asistir</option>
+                        </select>
+                        <span class="error-message" id="attendanceError"></span>
+                    </div>
+
+                    <!-- Cantidad de personas -->
+                    <div class="form-group">
+                        <label for="guests">Cantidad de personas <span class="required">*</span></label>
+                        <select id="guests" name="guests" class="form-select" required>
+                            <option value="">Selecciona la cantidad</option>
+                            <option value="1">1 persona</option>
+                            <option value="2">2 personas</option>
+                            <option value="3">3 personas</option>
+                            <option value="4">4 personas</option>
+                            <option value="5">5 personas</option>
+                            <option value="6">6 personas</option>
+                            <option value="7">7 personas</option>
+                            <option value="8">8 personas</option>
+                        </select>
+                        <span class="error-message" id="guestsError"></span>
+                    </div>
+
+                    <!-- Mensaje Opcional -->
+                    <div class="form-group">
+                        <label for="message">Mensaje opcional</label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            class="form-textarea" 
+                            placeholder="Dejá un mensaje (opcional)"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="button button-primary form-submit">
+                        ENVIAR CONFIRMACIÓN
+                    </button>
+
+                    <p class="success-message" id="successMessage"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- PIE DE PÁGINA -->
+        <footer class="footer">
+            <p class="footer-text">Con cariño, Catalina ✨</p>
+            <p class="footer-date">Mis 15 años · 15.11.2026</p>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

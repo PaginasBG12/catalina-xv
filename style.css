@@ -1,0 +1,919 @@
+/* ============================================
+   VARIABLES CSS
+   ============================================ */
+:root {
+    /* Colores Principales */
+    --color-dark: #1a1a1a;
+    --color-dark-light: #2d2d2d;
+    --color-cream: #faf8f3;
+    --color-champagne: #f5e6d3;
+    --color-gold: #d4a574;
+    --color-gold-light: #e8c9a0;
+    --color-accent: #c9876e;
+    
+    /* Tipografía */
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Montserrat', sans-serif;
+    
+    /* Tamaños */
+    --font-size-base: 16px;
+    --font-size-small: 14px;
+    --font-size-title: 3.5rem;
+    --font-size-heading: 2.5rem;
+    --font-size-subtitle: 1.5rem;
+    
+    /* Espaciado */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-xxl: 4rem;
+    
+    /* Bordes y Sombras */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    
+    /* Transiciones */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ============================================
+   RESET Y ESTILOS GLOBALES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-dark);
+    color: var(--color-cream);
+    line-height: 1.6;
+    font-size: var(--font-size-base);
+    overflow-x: hidden;
+}
+
+/* Respetar preferencias de movimiento */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   PANTALLA INICIAL / SPLASH SCREEN
+   ============================================ */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn var(--transition-slow);
+}
+
+.splash-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+}
+
+.splash-content {
+    text-align: center;
+    padding: var(--spacing-lg);
+    animation: slideUp var(--transition-slow) ease;
+}
+
+.splash-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+    color: var(--color-gold);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.splash-name {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    color: var(--color-cream);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 700;
+}
+
+.splash-occasion {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: var(--color-gold-light);
+    margin-bottom: var(--spacing-xxl);
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.splash-button {
+    margin-top: var(--spacing-lg);
+}
+
+/* ============================================
+   CONTENIDO PRINCIPAL
+   ============================================ */
+.main-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.main-content.visible {
+    opacity: 1;
+    pointer-events: auto;
+    animation: fadeIn var(--transition-slow);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* ============================================
+   SECCIÓN HERO / PORTADA
+   ============================================ */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: var(--spacing-lg);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #3a3a3a 100%);
+    z-index: 0;
+}
+
+.hero-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+    animation: float 20s ease-in-out infinite;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    animation: slideUp var(--transition-slow);
+}
+
+.hero-label {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--color-gold);
+    letter-spacing: 3px;
+    font-weight: 400;
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 12vw, 5rem);
+    color: var(--color-cream);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: var(--color-gold-light);
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.hero-date {
+    font-family: var(--font-serif);
+    font-size: clamp(0.875rem, 3vw, 1.25rem);
+    color: var(--color-gold);
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+/* ============================================
+   SECCIONES GENERALES
+   ============================================ */
+section {
+    padding: var(--spacing-xxl) var(--spacing-lg);
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    color: var(--color-cream);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.section-subtitle {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    color: var(--color-gold);
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.section-description {
+    text-align: center;
+    font-size: 1.05rem;
+    color: rgba(250, 248, 243, 0.85);
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+}
+
+/* ============================================
+   SECCIÓN MENSAJE
+   ============================================ */
+.message-section {
+    background: linear-gradient(135deg, rgba(45, 45, 45, 0.8) 0%, rgba(58, 58, 58, 0.8) 100%);
+    border-top: 1px solid rgba(212, 165, 116, 0.3);
+    border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+}
+
+.message-title {
+    color: var(--color-gold-light);
+    font-weight: 500;
+}
+
+.message-text {
+    font-size: 1.1rem;
+    color: rgba(250, 248, 243, 0.9);
+    text-align: center;
+    line-height: 1.9;
+    letter-spacing: 0.3px;
+}
+
+/* ============================================
+   SECCIÓN CUENTA REGRESIVA
+   ============================================ */
+.countdown-section {
+    background: var(--color-dark);
+}
+
+.countdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xxl) auto;
+    max-width: 600px;
+    padding: var(--spacing-lg);
+}
+
+@media (max-width: 640px) {
+    .countdown {
+        gap: var(--spacing-md);
+    }
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: var(--radius-lg);
+    animation: fadeInUp var(--transition-slow);
+}
+
+.countdown-value {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: var(--color-gold);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.countdown-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--color-gold-light);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: var(--spacing-sm);
+}
+
+.countdown-message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-gold);
+    margin-top: var(--spacing-lg);
+    font-weight: 500;
+}
+
+/* ============================================
+   SECCIÓN DETALLES DEL EVENTO
+   ============================================ */
+.event-details-section {
+    background: linear-gradient(135deg, rgba(45, 45, 45, 0.6) 0%, rgba(58, 58, 58, 0.6) 100%);
+}
+
+.event-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
+}
+
+.event-card {
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    animation: fadeInUp var(--transition-slow);
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212, 165, 116, 0.15);
+}
+
+.event-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.event-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-gold);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.event-card-text {
+    color: rgba(250, 248, 243, 0.85);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+/* ============================================
+   SECCIONES ÁLBUM Y MÚSICA
+   ============================================ */
+.album-section,
+.music-section {
+    text-align: center;
+}
+
+.album-section {
+    background: var(--color-dark);
+    border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+.music-section {
+    background: linear-gradient(135deg, rgba(45, 45, 45, 0.4) 0%, rgba(58, 58, 58, 0.4) 100%);
+    border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+/* ============================================
+   SECCIÓN REGALOS
+   ============================================ */
+.gifts-section {
+    background: linear-gradient(135deg, rgba(45, 45, 45, 0.8) 0%, rgba(58, 58, 58, 0.8) 100%);
+    text-align: center;
+}
+
+.gift-card {
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(212, 165, 116, 0.08) 100%);
+    border: 2px solid var(--color-gold);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    margin: var(--spacing-xxl) auto;
+    max-width: 400px;
+    animation: fadeInUp var(--transition-slow);
+}
+
+.gift-label {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.gift-number {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: var(--color-gold);
+    font-weight: 700;
+    margin: var(--spacing-lg) 0;
+    letter-spacing: 2px;
+}
+
+.copy-success-message {
+    display: none;
+    color: #90EE90;
+    font-size: 0.875rem;
+    margin-top: var(--spacing-md);
+    font-weight: 600;
+    animation: slideUp var(--transition-fast);
+}
+
+.copy-success-message.show {
+    display: block;
+}
+
+/* ============================================
+   SECCIÓN CONFIRMACIÓN
+   ============================================ */
+.confirmation-section {
+    background: var(--color-dark);
+    border-top: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+.confirmation-description {
+    color: rgba(250, 248, 243, 0.85);
+}
+
+.confirmation-form {
+    max-width: 600px;
+    margin: var(--spacing-xxl) auto;
+    animation: fadeInUp var(--transition-slow);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-xl);
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.95rem;
+    color: var(--color-gold);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.required {
+    color: var(--color-accent);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    background-color: rgba(250, 248, 243, 0.05);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    transition: all var(--transition-base);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: rgba(250, 248, 243, 0.4);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    background-color: rgba(250, 248, 243, 0.08);
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    font-family: var(--font-sans);
+}
+
+.error-message {
+    display: none;
+    color: #FF6B6B;
+    font-size: 0.875rem;
+    margin-top: var(--spacing-xs);
+    animation: slideUp var(--transition-fast);
+}
+
+.error-message.show {
+    display: block;
+}
+
+.form-input.error,
+.form-select.error {
+    border-color: #FF6B6B;
+    background-color: rgba(255, 107, 107, 0.05);
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    color: #90EE90;
+    font-size: 1rem;
+    margin-top: var(--spacing-xl);
+    font-weight: 500;
+    animation: slideUp var(--transition-base);
+}
+
+.success-message.show {
+    display: block;
+}
+
+.form-submit {
+    width: 100%;
+    margin-top: var(--spacing-xl);
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.button {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+}
+
+.button-primary {
+    background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
+    color: var(--color-dark);
+    border: none;
+}
+
+.button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+}
+
+.button-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2);
+}
+
+.button-secondary {
+    background: transparent;
+    color: var(--color-gold);
+    border: 2px solid var(--color-gold);
+}
+
+.button-secondary:hover {
+    background: rgba(212, 165, 116, 0.1);
+    transform: translateY(-2px);
+}
+
+.button-secondary:active {
+    transform: translateY(0);
+}
+
+.button:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   PIE DE PÁGINA
+   ============================================ */
+.footer {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 20, 0.8) 100%);
+    border-top: 1px solid rgba(212, 165, 116, 0.3);
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    text-align: center;
+    margin-top: var(--spacing-xxl);
+}
+
+.footer-text {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-gold);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.footer-date {
+    font-size: 0.875rem;
+    color: rgba(250, 248, 243, 0.6);
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+}
+
+/* ============================================
+   RESPONSIVE - TABLETS
+   ============================================ */
+@media (max-width: 768px) {
+    :root {
+        --font-size-title: 2.5rem;
+        --font-size-heading: 2rem;
+        --spacing-xxl: 3rem;
+        --spacing-xl: 2rem;
+    }
+
+    section {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVILES
+   ============================================ */
+@media (max-width: 640px) {
+    :root {
+        --font-size-base: 15px;
+        --font-size-title: 2rem;
+        --font-size-heading: 1.5rem;
+        --spacing-xxl: 2rem;
+        --spacing-xl: 1.5rem;
+        --spacing-lg: 1.25rem;
+    }
+
+    section {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .splash-content {
+        padding: var(--spacing-md);
+    }
+
+    .hero {
+        height: 80vh;
+        padding: var(--spacing-md);
+    }
+
+    .hero-title {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-name {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .section-description {
+        font-size: 0.95rem;
+    }
+
+    .button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 0.85rem;
+        width: 100%;
+    }
+
+    .countdown {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        margin: var(--spacing-lg) auto;
+    }
+
+    .countdown-item {
+        padding: var(--spacing-md);
+    }
+
+    .countdown-value {
+        font-size: 2rem;
+    }
+
+    .event-cards {
+        gap: var(--spacing-lg);
+    }
+
+    .event-card {
+        padding: var(--spacing-lg);
+    }
+
+    .gift-card {
+        padding: var(--spacing-lg);
+        margin: var(--spacing-lg) auto;
+    }
+
+    .gift-number {
+        font-size: 2rem;
+        margin: var(--spacing-md) 0;
+    }
+
+    .confirmation-form {
+        margin: var(--spacing-lg) auto;
+    }
+
+    .form-group {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: var(--spacing-md);
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+
+    .footer {
+        padding: var(--spacing-lg);
+    }
+
+    .footer-text {
+        font-size: 1rem;
+    }
+
+    .footer-date {
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - MÓVILES PEQUEÑOS (320px)
+   ============================================ */
+@media (max-width: 480px) {
+    :root {
+        --font-size-base: 14px;
+        --spacing-lg: 1rem;
+        --spacing-md: 1rem;
+    }
+
+    .splash-name {
+        font-size: 2rem;
+    }
+
+    .splash-occasion {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .hero-label {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+    }
+
+    .hero-name {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-date {
+        font-size: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .countdown {
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+
+    .countdown-item {
+        padding: var(--spacing-sm);
+    }
+
+    .countdown-value {
+        font-size: 1.5rem;
+    }
+
+    .countdown-label {
+        font-size: 0.65rem;
+        margin-top: var(--spacing-xs);
+    }
+
+    .message-text {
+        font-size: 0.95rem;
+    }
+
+    .event-card {
+        padding: var(--spacing-md);
+    }
+
+    .gift-card {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto;
+    }
+
+    .button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 0.8rem;
+    }
+
+    .form-submit {
+        margin-top: var(--spacing-lg);
+    }
+}
