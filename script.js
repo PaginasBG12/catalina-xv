@@ -267,7 +267,7 @@ function submitForm() {
         });
     }
 
-    successMessage.textContent = '✓ ¡Confirmación enviada! Podés verla en la lista de confirmaciones. 🎉';
+    successMessage.innerHTML = '✓ ¡Confirmación enviada! Podés verla en <a href="./confirmaciones.html" style="color: inherit; text-decoration: underline;">la lista de confirmaciones</a>. 🎉';
     successMessage.classList.add('show');
 
     setTimeout(function() {
