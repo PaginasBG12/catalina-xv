@@ -156,6 +156,14 @@ body {
     flex-shrink: 0;
 }
 
+.envelope-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+}
+
 .envelope-bg-01 {
     background-image: url('./assets/foto-01.jpg');
 }
@@ -607,6 +615,15 @@ section {
     transition: transform var(--transition-base), filter var(--transition-base);
     border: 2px solid rgba(212, 165, 116, 0.3);
     box-shadow: var(--shadow-md);
+}
+
+.gallery-image-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .gallery-image::after {
@@ -1975,6 +1992,14 @@ section {
     box-shadow:
         0 15px 35px rgba(56, 40, 24, 0.18),
         0 0 0 1px rgba(132, 101, 64, 0.28);
+}
+
+.signature-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
 }
 
 .confirmation-quick-btn {
