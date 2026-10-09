@@ -91,7 +91,8 @@ function initCountdown() {
 function initCopyPrex() {
     const copyBtn = document.getElementById('copyPrexBtn');
     const successMessage = document.getElementById('copySuccessMessage');
-    const prexNumber = '1308674';
+    const prexElement = document.getElementById('prexNumber');
+    const prexNumber = (prexElement?.textContent || '1308674').replace(/\D/g, '');
 
     if (!copyBtn) return;
 
