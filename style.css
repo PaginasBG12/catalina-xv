@@ -1982,10 +1982,12 @@ section {
 
 .signature-name {
     font-family: var(--font-script);
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    letter-spacing: 0.5px;
-    color: #7d5f3f;
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    letter-spacing: 0;
+    color: #7a5634;
     font-weight: 500;
+    line-height: 1;
+    text-shadow: 0 6px 14px rgba(92, 66, 38, 0.2);
     margin-bottom: var(--spacing-lg);
 }
 
