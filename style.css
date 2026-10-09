@@ -1821,6 +1821,13 @@ section {
     margin-top: var(--spacing-sm);
 }
 
+.hero-name {
+    font-family: var(--font-script);
+    font-size: clamp(2rem, 6vw, 3rem);
+    letter-spacing: 0.5px;
+    color: #7d5833;
+}
+
 .hero-footer-text {
     font-size: 1.05rem;
     color: #6f5233;
@@ -1854,7 +1861,7 @@ section {
 }
 
 .gallery-image::after {
-    background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.32) 100%);
+    background: linear-gradient(180deg, transparent 58%, rgba(0, 0, 0, 0.16) 100%);
     opacity: 1;
 }
 
@@ -1912,11 +1919,11 @@ section {
 }
 
 .signature-name {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    letter-spacing: 4px;
+    font-family: var(--font-script);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    letter-spacing: 0.5px;
     color: #7d5f3f;
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: var(--spacing-lg);
 }
 
