@@ -2554,16 +2554,6 @@ section {
 /* ============================================
    MATCH REFERENCIA - CAPA FINAL
    ============================================ */
-.splash-screen {
-    display: none !important;
-}
-
-.main-content,
-.main-content.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
 body {
     background:
         radial-gradient(circle at 50% -10%, rgba(212, 165, 116, 0.2) 0%, transparent 55%),
