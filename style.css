@@ -1779,3 +1779,147 @@ section {
         padding: var(--spacing-lg);
     }
 }
+
+/* ============================================
+   PULIDO FINAL - ENVIO
+   ============================================ */
+:root {
+    --font-script: 'Great Vibes', cursive;
+}
+
+.hero-card {
+    background:
+        linear-gradient(180deg, rgba(255, 252, 246, 0.97) 0%, rgba(246, 236, 221, 0.98) 100%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 21px,
+            rgba(133, 102, 65, 0.04) 21px,
+            rgba(133, 102, 65, 0.04) 22px
+        );
+}
+
+.hero-stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(122, 95, 62, 0.35);
+    color: #795936;
+    font-size: 0.72rem;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: rgba(255, 249, 240, 0.8);
+}
+
+.hero-script {
+    font-family: var(--font-script);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #845f3d;
+    margin-top: var(--spacing-sm);
+}
+
+.hero-footer-text {
+    font-size: 1.05rem;
+    color: #6f5233;
+}
+
+.section-title {
+    position: relative;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 34px;
+}
+
+.section-title::before,
+.section-title::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 22px;
+    height: 1px;
+    background: #9b784f;
+    transform: translateY(-50%);
+}
+
+.section-title::before {
+    left: 0;
+}
+
+.section-title::after {
+    right: 0;
+}
+
+.gallery-image::after {
+    background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.32) 100%);
+    opacity: 1;
+}
+
+.photo-placeholder {
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    bottom: 12px;
+    top: auto;
+    transform: translateX(-50%);
+}
+
+.gallery-image:hover .photo-placeholder {
+    opacity: 1;
+}
+
+.music-section .container {
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(212, 165, 116, 0.13), transparent 58%),
+        linear-gradient(180deg, rgba(255, 251, 245, 0.98) 0%, rgba(247, 237, 225, 0.98) 100%);
+}
+
+.music-main-btn {
+    margin-bottom: var(--spacing-md);
+}
+
+.music-question {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: #6a4f31;
+    margin-bottom: var(--spacing-md);
+}
+
+.button {
+    border-radius: 999px;
+}
+
+.button-primary {
+    background: linear-gradient(135deg, #7f5e3a 0%, #b68f62 100%);
+    color: #fff9f1;
+}
+
+.button-primary:hover {
+    box-shadow: 0 12px 26px rgba(124, 91, 52, 0.3);
+}
+
+.footer-text {
+    font-size: 1.45rem;
+}
+
+@media (max-width: 640px) {
+    .section-title {
+        padding: 0 24px;
+    }
+
+    .section-title::before,
+    .section-title::after {
+        width: 16px;
+    }
+
+    .hero-script {
+        font-size: 1.35rem;
+    }
+
+    .music-question {
+        font-size: 0.98rem;
+    }
+}
