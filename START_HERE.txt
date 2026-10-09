@@ -1,0 +1,57 @@
+🎉 ¡BIENVENIDO! - CHECKLIST RÁPIDO
+====================================
+
+📍 ESTÁS AQUÍ:
+   ✅ Invitación creada (hermosa y funcional)
+   ✅ Formspree configurado (recibirás emails)
+   ⏳ GitHub Pages (ESTAMOS AQUÍ)
+
+================================================================
+
+🚀 PRÓXIMO PASO - GITHUB PAGES (8 minutos)
+
+1. ABRE ESTE ARCHIVO:
+   📖 GITHUB_PASO_A_PASO.md
+
+2. SIGUE LOS 5 PASOS:
+   ✏️ Paso 1: GitHub (2 min)
+   ✏️ Paso 2: Crear repositorio (1 min)
+   ✏️ Paso 3: Terminal (2 min)
+   ✏️ Paso 4: Activar Pages (2 min)
+   ✏️ Paso 5: Probar y Compartir (1 min)
+
+3. CUANDO TERMINES:
+   🎯 Tendrás tu link: https://tuusername.github.io/catalina-15/
+
+================================================================
+
+💡 TIPS:
+
+• No saltes pasos
+• Lee BIEN dónde dice "Reemplaza TU_USERNAME"
+• Si algo no te entiende, googleá el #paso que te cuesta
+• Cuando veas ✅ en terminal, es que va bien
+
+================================================================
+
+✍️ ARCHIVOS IMPORTANTES:
+
+├─ GITHUB_PASO_A_PASO.md    ← 👈 EMPIEZA AQUÍ
+├─ index.html               (tu invitación)
+├─ style.css                (el diseño)
+├─ script.js                (las funciones)
+└─ README.md                (documentación completa)
+
+================================================================
+
+🎯 CUANDO TERMINES:
+
+Compartí este link:
+https://tuusername.github.io/catalina-15/
+
+Por WhatsApp, Instagram, Email... ¡a invitar a todos!
+
+================================================================
+
+¿Dudas? Cada archivo tiene instrucciones detalladas.
+¡Tú puedes! 💪✨
