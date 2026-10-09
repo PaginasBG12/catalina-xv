@@ -90,6 +90,7 @@ body {
     z-index: 1000;
     animation: fadeIn var(--transition-slow);
     padding: var(--spacing-lg);
+    perspective: 1200px;
 }
 
 .splash-screen::before {
@@ -110,49 +111,138 @@ body {
     transition: opacity var(--transition-slow);
 }
 
-.splash-card {
+/* SOBRE ELEGANTE */
+.splash-envelope {
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 450px;
-    animation: slideUp var(--transition-slow) ease, float 6s ease-in-out infinite;
+    max-width: 500px;
+    height: auto;
+    animation: slideUp var(--transition-slow) ease;
+    transform-style: preserve-3d;
 }
 
-.splash-card-inner {
+/* FOTOS DESLIZÁNDOSE EN EL SOBRE */
+.envelope-photos {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 8px;
+    padding: var(--spacing-lg);
     background: linear-gradient(135deg, rgba(250, 248, 243, 0.95) 0%, rgba(245, 230, 211, 0.93) 100%);
+    border-radius: 0 0 20px 20px;
+    max-width: 100%;
+    overflow: hidden;
+    height: 120px;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 2;
+}
+
+.envelope-photo {
+    width: 80px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    border: 2px solid rgba(212, 165, 116, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideFromBottom 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+    animation-delay: var(--delay);
+    transform: translateY(20px);
+    flex-shrink: 0;
+}
+
+@keyframes slideFromBottom {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* CUERPO DEL SOBRE */
+.envelope-body {
+    background: linear-gradient(135deg, rgba(250, 248, 243, 0.98) 0%, rgba(245, 230, 211, 0.96) 100%);
     border: 2px solid rgba(212, 165, 116, 0.4);
     border-radius: 20px;
-    padding: var(--spacing-xxl) var(--spacing-lg);
-    text-align: center;
+    padding-top: var(--spacing-xxl);
+    padding-bottom: 150px;
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
                 0 0 80px rgba(212, 165, 116, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.splash-top,
-.splash-center,
-.splash-bottom {
+.splash-screen.opened .envelope-body {
+    transform: translateY(-20px) scale(0.95);
+}
+
+/* SOLAPA DEL SOBRE */
+.envelope-flap {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.25) 0%, rgba(212, 165, 116, 0.15) 100%);
+    border: 2px solid rgba(212, 165, 116, 0.3);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    transform-origin: top center;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 5;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+}
+
+.splash-screen.opened .envelope-flap {
+    transform: rotateX(120deg);
+    opacity: 0;
+}
+
+/* CONTENIDO DEL SOBRE */
+.envelope-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease 0.2s;
+}
+
+.splash-screen.opened .envelope-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope-top,
+.envelope-center,
+.envelope-bottom {
     display: flex;
     flex-direction: column;
 }
 
-.splash-top {
+.envelope-top {
     margin-bottom: var(--spacing-lg);
 }
 
-.splash-center {
-    margin-bottom: var(--spacing-xl);
+.envelope-center {
+    margin-bottom: var(--spacing-lg);
     padding: var(--spacing-lg) 0;
     border-top: 1px solid rgba(212, 165, 116, 0.3);
     border-bottom: 1px solid rgba(212, 165, 116, 0.3);
 }
 
-.splash-bottom {
+.envelope-bottom {
     margin-top: var(--spacing-lg);
 }
 
-.splash-subtitle {
+.envelope-subtitle {
     font-family: var(--font-sans);
     font-size: 0.875rem;
     letter-spacing: 2px;
@@ -161,7 +251,7 @@ body {
     text-transform: uppercase;
 }
 
-.splash-name {
+.envelope-name {
     font-family: var(--font-serif);
     font-size: clamp(2.5rem, 8vw, 3.5rem);
     color: var(--color-dark);
@@ -169,7 +259,7 @@ body {
     font-weight: 700;
 }
 
-.splash-occasion {
+.envelope-occasion {
     font-family: var(--font-serif);
     font-size: clamp(1.25rem, 4vw, 1.75rem);
     color: var(--color-gold);
@@ -177,20 +267,26 @@ body {
     letter-spacing: 1px;
 }
 
-.splash-button {
+.envelope-button {
     background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
     color: var(--color-dark);
     border: none;
     box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
     width: 100%;
+    cursor: pointer;
+    transition: all var(--transition-base);
 }
 
-.splash-button:hover {
+.envelope-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 30px rgba(212, 165, 116, 0.4);
 }
 
-.splash-hint {
+.envelope-button:active {
+    transform: translateY(-1px);
+}
+
+.envelope-hint {
     margin-top: var(--spacing-md);
     font-size: 0.8rem;
     color: rgba(212, 165, 116, 0.6);
@@ -1070,13 +1166,17 @@ section {
    RESPONSIVE GALERÍA - TABLETS
    ============================================ */
 @media (max-width: 768px) {
-    .splash-card {
-        max-width: 380px;
+    .splash-envelope {
+        max-width: 420px;
     }
 
-    .splash-card-inner {
-        padding: var(--spacing-lg) var(--spacing-md);
+    .envelope-body {
+        padding-bottom: 140px;
         border-radius: 16px;
+    }
+
+    .envelope-name {
+        font-size: 2.2rem;
     }
 
     .gallery-grid {
@@ -1102,21 +1202,40 @@ section {
 }
 
 @media (max-width: 480px) {
-    .splash-card {
-        max-width: 340px;
+    .splash-envelope {
+        max-width: 320px;
     }
 
-    .splash-card-inner {
-        padding: var(--spacing-lg) var(--spacing-md);
+    .envelope-body {
+        padding-top: var(--spacing-lg);
+        padding-bottom: 120px;
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
         border-radius: 14px;
     }
 
-    .splash-name {
-        font-size: 2rem;
+    .envelope-photos {
+        padding: var(--spacing-md);
+        height: 100px;
+        gap: 6px;
     }
 
-    .splash-occasion {
-        font-size: 1.1rem;
+    .envelope-photo {
+        width: 65px;
+        height: 85px;
+        border-radius: 6px;
+    }
+
+    .envelope-name {
+        font-size: 1.8rem;
+    }
+
+    .envelope-occasion {
+        font-size: 1rem;
+    }
+
+    .envelope-hint {
+        font-size: 0.75rem;
     }
 
     .gallery-grid {

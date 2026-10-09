@@ -24,13 +24,14 @@ function initSplashScreen() {
     if (!openInvitationBtn) return;
 
     openInvitationBtn.addEventListener('click', function() {
-        // Agregar clase hidden al splash screen
-        splashScreen.classList.add('hidden');
+        // Agregar clase opened para abrir el sobre
+        splashScreen.classList.add('opened');
 
-        // Esperar a que termine la transición antes de mostrar el contenido
+        // Esperar a que se abra el sobre antes de cerrar
         setTimeout(function() {
+            splashScreen.classList.add('hidden');
             mainContent.classList.add('visible');
-        }, 100);
+        }, 800);
     });
 
     // También permitir presionar Enter en la pantalla splash
