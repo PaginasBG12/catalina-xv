@@ -2,6 +2,15 @@
 
 Una invitación digital web PROFESIONAL, ELEGANTE y RESPONSIVE para celebrar los 15 años de Catalina.
 
+## 🚀 EMPEZAR AHORA
+
+**Lee primero:** [ULTIMOS_PASOS.md](ULTIMOS_PASOS.md)
+
+Solo necesitas 15 minutos para:
+1. ✅ Configurar Formspree (recibir confirmaciones)
+2. ✅ Publicar en GitHub Pages (poner online)
+3. ✅ Compartir el link con tus invitados
+
 ## ✨ Características
 
 - ✅ Diseño elegante, sofisticado y moderno
