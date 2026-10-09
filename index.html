@@ -304,6 +304,10 @@
                     <source src="./assets/perfect.mp3" type="audio/mpeg">
                     Tu navegador no soporta el reproductor de audio.
                 </audio>
+                <audio id="backgroundMusic" preload="none">
+                    <source src="./assets/perfect.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el reproductor de audio.
+                </audio>
                 <p class="music-question">La canción que sugerís se envía junto con tu confirmación.</p>
             </div>
         </section>
@@ -424,6 +428,13 @@
         </footer>
 
     </main>
+
+    <div class="music-player" id="musicPlayer">
+        <button class="music-toggle" id="musicToggle" aria-label="Reproducir música">
+            <span class="music-icon" id="musicIcon">▶</span>
+        </button>
+        <div class="music-info">Tocar para escuchar</div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCopyPrex();
     initFormValidation();
     initScrollAnimations();
+    initMusicPlayer();
 });
 
 /* ============================================
@@ -371,6 +372,42 @@ function prefersReducedMotion() {
 function getUruguayTime() {
     return new Date().toLocaleString('es-UY', {
         timeZone: 'America/Montevideo'
+    });
+}
+
+/* ============================================
+   REPRODUCTOR FLOTANTE
+   ============================================ */
+
+function initMusicPlayer() {
+    const musicToggle = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
+    if (!musicToggle || !backgroundMusic) return;
+
+    musicToggle.addEventListener('click', async function() {
+        try {
+            if (backgroundMusic.paused) {
+                await backgroundMusic.play();
+                musicToggle.classList.add('playing');
+                if (musicIcon) musicIcon.textContent = '❚❚';
+                musicToggle.setAttribute('aria-label', 'Pausar música');
+            } else {
+                backgroundMusic.pause();
+                musicToggle.classList.remove('playing');
+                if (musicIcon) musicIcon.textContent = '▶';
+                musicToggle.setAttribute('aria-label', 'Reproducir música');
+            }
+        } catch (error) {
+            console.error('No se pudo reproducir audio:', error);
+        }
+    });
+
+    backgroundMusic.addEventListener('ended', function() {
+        musicToggle.classList.remove('playing');
+        if (musicIcon) musicIcon.textContent = '▶';
+        musicToggle.setAttribute('aria-label', 'Reproducir música');
     });
 }
 
