@@ -48,7 +48,7 @@ function initSplashScreen() {
    ============================================ */
 
 function initCountdown() {
-    const eventDate = new Date('2026-11-15T21:00:00').getTime();
+    const eventDate = new Date('2026-11-14T21:00:00').getTime();
     const countdownInterval = setInterval(updateCountdown, 1000);
 
     function updateCountdown() {
@@ -423,5 +423,5 @@ function initMusicPlayer() {
 
 // Log para debugging (opcional)
 console.log('✨ Invitación de Catalina - 15 años');
-console.log('Evento: 15 de noviembre de 2026 a las 21:00 hs');
+console.log('Evento: 14 de noviembre de 2026 a las 21:00 hs');
 console.log('Ubicación: Salón Los Álamos');
