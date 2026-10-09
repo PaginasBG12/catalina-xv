@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCopyPrex();
     initFormValidation();
     initScrollAnimations();
+    initMusicPlayer();
 });
 
 /* ============================================
@@ -326,6 +327,42 @@ function getUruguayTime() {
     return new Date().toLocaleString('es-UY', {
         timeZone: 'America/Montevideo'
     });
+}
+
+/* ============================================
+   REPRODUCTOR DE MÚSICA
+   ============================================ */
+
+function initMusicPlayer() {
+    const musicToggle = document.getElementById('musicToggle');
+    const musicPlayer = document.getElementById('musicPlayer');
+    
+    if (!musicToggle) return;
+
+    let isPlaying = false;
+    const youtubeUrl = 'https://youtu.be/cNGjD0VG4R8?si=9BbWEHxldFso3UJP';
+
+    musicToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        if (!isPlaying) {
+            // Abrir la canción en YouTube en una nueva ventana
+            window.open(youtubeUrl, '_blank');
+            
+            isPlaying = true;
+            musicToggle.classList.add('playing');
+            musicToggle.innerHTML = '🎵';
+        } else {
+            isPlaying = false;
+            musicToggle.classList.remove('playing');
+            musicToggle.innerHTML = '🎵';
+        }
+    });
+
+    // Mostrar hint al entrar
+    setTimeout(function() {
+        musicPlayer.style.opacity = '1';
+    }, 2000);
 }
 
 // Log para debugging (opcional)

@@ -30,6 +30,9 @@
             
             <!-- Cuerpo del sobre -->
             <div class="envelope-body">
+                <!-- Foto de fondo (se muestra cuando se abre) -->
+                <div class="envelope-background-image" style="background-image: url('./assets/catalina-opening.jpg');"></div>
+                
                 <!-- Fotos de fondo en la tarjeta -->
                 <div class="envelope-photos">
                     <div class="envelope-photo" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80'); --delay: 0s;"></div>
@@ -310,6 +313,18 @@
         </footer>
 
     </main>
+
+    <!-- REPRODUCTOR DE MÚSICA - FLOTANTE -->
+    <audio id="backgroundMusic" loop>
+        <!-- La música se reproducirá desde la canción de YouTube si lo permiten los permisos -->
+    </audio>
+
+    <div class="music-player" id="musicPlayer">
+        <button class="music-toggle" id="musicToggle" aria-label="Reproducir música">
+            <span class="music-icon">🎵</span>
+        </button>
+        <div class="music-info">La canción de esta noche</div>
+    </div>
 
     <script src="script.js"></script>
 </body>
