@@ -390,25 +390,34 @@ function initMusicPlayer() {
         try {
             if (backgroundMusic.paused) {
                 await backgroundMusic.play();
-                musicToggle.classList.add('playing');
-                if (musicIcon) musicIcon.textContent = '❚❚';
-                musicToggle.setAttribute('aria-label', 'Pausar música');
             } else {
                 backgroundMusic.pause();
-                musicToggle.classList.remove('playing');
-                if (musicIcon) musicIcon.textContent = '▶';
-                musicToggle.setAttribute('aria-label', 'Reproducir música');
             }
         } catch (error) {
             console.error('No se pudo reproducir audio:', error);
         }
     });
 
+    function setMusicUi(isPlaying) {
+        musicToggle.classList.toggle('playing', isPlaying);
+        if (musicIcon) musicIcon.textContent = isPlaying ? '❚❚' : '▶';
+        musicToggle.setAttribute('aria-label', isPlaying ? 'Pausar música' : 'Reproducir música');
+    }
+
+    backgroundMusic.addEventListener('play', function() {
+        setMusicUi(true);
+    });
+
+    backgroundMusic.addEventListener('pause', function() {
+        setMusicUi(false);
+    });
+
     backgroundMusic.addEventListener('ended', function() {
         musicToggle.classList.remove('playing');
-        if (musicIcon) musicIcon.textContent = '▶';
-        musicToggle.setAttribute('aria-label', 'Reproducir música');
+        setMusicUi(false);
     });
+
+    setMusicUi(!backgroundMusic.paused);
 }
 
 // Log para debugging (opcional)
