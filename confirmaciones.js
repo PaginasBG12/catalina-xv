@@ -119,12 +119,11 @@ function exportCsv() {
     URL.revokeObjectURL(url);
 }
 
-async function clearSharedList(sheetUrl, clearKey) {
-    if (!sheetUrl || !clearKey) return { ok: false, error: 'Falta URL o clave.' };
+async function clearSharedList(sheetUrl) {
+    if (!sheetUrl) return { ok: false, error: 'Falta URL.' };
 
     const payload = new URLSearchParams({
-        mode: 'clear',
-        clearKey: clearKey
+        mode: 'clear'
     });
 
     try {
@@ -156,10 +155,7 @@ async function clearList() {
     if (!confirmation) return;
 
     const sheetUrl = getSheetUrl();
-    const clearKey = window.prompt('Ingresá la clave para borrar la lista compartida:');
-    if (!clearKey) return;
-
-    const result = await clearSharedList(sheetUrl, clearKey.trim());
+    const result = await clearSharedList(sheetUrl);
     if (result.ok) {
         localStorage.removeItem(STORAGE_KEY);
         await hydrateList();
