@@ -1,5 +1,6 @@
 var SPREADSHEET_ID = 'PEGAR_ID_DE_TU_GOOGLE_SHEET';
 var SHEET_NAME = 'Respuestas';
+var ADMIN_CLEAR_KEY = 'CAMBIAR_ESTA_CLAVE';
 
 function doGet(e) {
   try {
@@ -41,6 +42,20 @@ function doPost(e) {
   try {
     var params = (e && e.parameter) ? e.parameter : {};
     var mode = params.mode || "append";
+
+    if (mode === "clear") {
+      if (!ADMIN_CLEAR_KEY || ADMIN_CLEAR_KEY === 'CAMBIAR_ESTA_CLAVE') {
+        return json_({ ok: false, error: 'Configurá ADMIN_CLEAR_KEY en Apps Script.' });
+      }
+
+      if (toSafeString_(params.clearKey) !== ADMIN_CLEAR_KEY) {
+        return json_({ ok: false, error: 'Clave incorrecta.' });
+      }
+
+      var clearSheet = getOrCreateSheet_();
+      var deleted = clearDataRows_(clearSheet);
+      return json_({ ok: true, deleted: deleted });
+    }
 
     if (mode !== "append") {
       return json_({ ok: false, error: "Modo no soportado" });
@@ -84,6 +99,17 @@ function getOrCreateSheet_() {
   }
 
   return sheet;
+}
+
+function clearDataRows_(sheet) {
+  var lastRow = sheet.getLastRow();
+  if (lastRow <= 1) {
+    return 0;
+  }
+
+  var rowsToDelete = lastRow - 1;
+  sheet.deleteRows(2, rowsToDelete);
+  return rowsToDelete;
 }
 
 function json_(payload) {

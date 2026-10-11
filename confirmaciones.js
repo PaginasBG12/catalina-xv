@@ -119,11 +119,55 @@ function exportCsv() {
     URL.revokeObjectURL(url);
 }
 
-function clearList() {
-    const confirmation = window.confirm('¿Seguro que querés borrar todas las confirmaciones guardadas?');
+async function clearSharedList(sheetUrl, clearKey) {
+    if (!sheetUrl || !clearKey) return { ok: false, error: 'Falta URL o clave.' };
+
+    const payload = new URLSearchParams({
+        mode: 'clear',
+        clearKey: clearKey
+    });
+
+    try {
+        const response = await fetch(sheetUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: payload.toString()
+        });
+
+        if (!response.ok) {
+            return { ok: false, error: `HTTP ${response.status}` };
+        }
+
+        const data = await response.json().catch(() => null);
+        if (!data || data.ok !== true) {
+            return { ok: false, error: (data && data.error) || 'Respuesta invalida del servidor.' };
+        }
+
+        return { ok: true, deleted: data.deleted || 0 };
+    } catch (error) {
+        return { ok: false, error: 'No se pudo conectar con Google Sheets.' };
+    }
+}
+
+async function clearList() {
+    const confirmation = window.confirm('¿Seguro que querés borrar TODAS las confirmaciones? Esta acción no se puede deshacer.');
     if (!confirmation) return;
-    localStorage.removeItem(STORAGE_KEY);
-    hydrateList();
+
+    const sheetUrl = getSheetUrl();
+    const clearKey = window.prompt('Ingresá la clave para borrar la lista compartida:');
+    if (!clearKey) return;
+
+    const result = await clearSharedList(sheetUrl, clearKey.trim());
+    if (result.ok) {
+        localStorage.removeItem(STORAGE_KEY);
+        await hydrateList();
+        window.alert(`Lista borrada correctamente. Registros eliminados: ${result.deleted}`);
+        return;
+    }
+
+    window.alert(`No se pudo borrar la lista compartida: ${result.error}`);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -146,7 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (exportBtn) exportBtn.addEventListener('click', exportCsv);
-    if (clearBtn) clearBtn.addEventListener('click', clearList);
+    if (clearBtn) {
+        clearBtn.addEventListener('click', async () => {
+            await clearList();
+        });
+    }
 
     hydrateList();
 });
