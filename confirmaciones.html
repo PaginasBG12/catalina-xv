@@ -15,10 +15,14 @@
                 <p class="section-description">Listado de respuestas recibidas desde el formulario.</p>
 
                 <div class="confirmation-actions">
+                    <input type="url" id="sheetUrlInput" class="form-input" placeholder="Pegá aquí la URL del Web App de Google Sheets">
+                    <button class="button button-secondary" id="saveSheetUrlBtn">Guardar URL</button>
                     <button class="button button-secondary" id="exportCsvBtn">Exportar CSV</button>
                     <button class="button button-secondary" id="clearListBtn">Limpiar lista</button>
                     <a class="button button-primary" href="./index.html">Volver a la invitación</a>
                 </div>
+
+                <p class="section-description" id="listSourceInfo">Fuente: lista local de respaldo.</p>
 
                 <div class="confirmation-table-wrap">
                     <table class="confirmation-table" id="confirmationTable">

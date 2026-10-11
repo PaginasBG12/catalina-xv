@@ -243,7 +243,7 @@ function validateForm() {
 async function submitForm() {
     const form = document.getElementById('confirmationForm');
     const successMessage = document.getElementById('successMessage');
-    const googleSheetUrl = (form.getAttribute('data-google-sheet-url') || '').trim();
+    const googleSheetUrl = getGoogleSheetUrl(form);
 
     const formData = new FormData(form);
     const confirmation = {
@@ -278,6 +278,18 @@ async function submitForm() {
     }, 3000);
 }
 
+function getGoogleSheetUrl(form) {
+    const attrUrl = (form.getAttribute('data-google-sheet-url') || '').trim();
+    const savedUrl = (localStorage.getItem('catalinaXVSheetApiUrl') || '').trim();
+
+    if (attrUrl && !attrUrl.includes('PEGAR_URL')) {
+        localStorage.setItem('catalinaXVSheetApiUrl', attrUrl);
+        return attrUrl;
+    }
+
+    return savedUrl;
+}
+
 function saveConfirmationToList(confirmation) {
     const storageKey = 'catalinaXVConfirmaciones';
     try {
@@ -293,6 +305,7 @@ async function sendConfirmationToGoogleSheet(googleSheetUrl, confirmation) {
     if (!googleSheetUrl || googleSheetUrl.includes('PEGAR_URL')) return false;
 
     const payload = new URLSearchParams({
+        mode: 'append',
         createdAt: confirmation.createdAt || '',
         name: confirmation.name || '',
         attendance: confirmation.attendance || '',

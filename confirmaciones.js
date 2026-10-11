@@ -1,4 +1,6 @@
 const STORAGE_KEY = 'catalinaXVConfirmaciones';
+const SHEET_URL_KEY = 'catalinaXVSheetApiUrl';
+let currentRenderedConfirmations = [];
 
 function readConfirmations() {
     try {
@@ -12,22 +14,22 @@ function readConfirmations() {
     }
 }
 
-function renderTable() {
+function renderTable(confirmations) {
     const tbody = document.getElementById('confirmationTableBody');
     const emptyMsg = document.getElementById('emptyListMsg');
     if (!tbody || !emptyMsg) return;
 
-    const confirmations = readConfirmations();
+    currentRenderedConfirmations = Array.isArray(confirmations) ? confirmations : [];
     tbody.innerHTML = '';
 
-    if (!confirmations.length) {
+    if (!currentRenderedConfirmations.length) {
         emptyMsg.style.display = 'block';
         return;
     }
 
     emptyMsg.style.display = 'none';
 
-    confirmations
+    currentRenderedConfirmations
         .slice()
         .reverse()
         .forEach((item) => {
@@ -44,8 +46,43 @@ function renderTable() {
         });
 }
 
+async function readSharedConfirmations(sheetUrl) {
+    if (!sheetUrl) return null;
+    try {
+        const separator = sheetUrl.includes('?') ? '&' : '?';
+        const response = await fetch(`${sheetUrl}${separator}mode=list`, { method: 'GET' });
+        if (!response.ok) return null;
+
+        const data = await response.json();
+        if (Array.isArray(data)) return data;
+        if (Array.isArray(data.rows)) return data.rows;
+        return null;
+    } catch (error) {
+        console.error('No se pudo leer la lista compartida:', error);
+        return null;
+    }
+}
+
+function saveSheetUrl(url) {
+    const trimmed = (url || '').trim();
+    if (!trimmed) {
+        localStorage.removeItem(SHEET_URL_KEY);
+        return;
+    }
+    localStorage.setItem(SHEET_URL_KEY, trimmed);
+}
+
+function getSheetUrl() {
+    return (localStorage.getItem(SHEET_URL_KEY) || '').trim();
+}
+
+function setSourceInfo(text) {
+    const sourceInfo = document.getElementById('listSourceInfo');
+    if (sourceInfo) sourceInfo.textContent = text;
+}
+
 function exportCsv() {
-    const confirmations = readConfirmations();
+    const confirmations = currentRenderedConfirmations;
     if (!confirmations.length) return;
 
     const header = ['Fecha', 'Nombre', 'Asistencia', 'Personas', 'Cancion', 'Mensaje'];
@@ -77,15 +114,49 @@ function clearList() {
     const confirmation = window.confirm('¿Seguro que querés borrar todas las confirmaciones guardadas?');
     if (!confirmation) return;
     localStorage.removeItem(STORAGE_KEY);
-    renderTable();
+    hydrateList();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderTable();
+    const sheetUrlInput = document.getElementById('sheetUrlInput');
+    const saveSheetUrlBtn = document.getElementById('saveSheetUrlBtn');
 
     const exportBtn = document.getElementById('exportCsvBtn');
     const clearBtn = document.getElementById('clearListBtn');
 
+    const existingSheetUrl = getSheetUrl();
+    if (sheetUrlInput && existingSheetUrl) {
+        sheetUrlInput.value = existingSheetUrl;
+    }
+
+    if (saveSheetUrlBtn && sheetUrlInput) {
+        saveSheetUrlBtn.addEventListener('click', async () => {
+            saveSheetUrl(sheetUrlInput.value);
+            await hydrateList();
+        });
+    }
+
     if (exportBtn) exportBtn.addEventListener('click', exportCsv);
     if (clearBtn) clearBtn.addEventListener('click', clearList);
+
+    hydrateList();
 });
+
+async function hydrateList() {
+    const sheetUrl = getSheetUrl();
+    const sharedList = await readSharedConfirmations(sheetUrl);
+
+    if (sharedList && sharedList.length) {
+        renderTable(sharedList);
+        setSourceInfo('Fuente: hoja compartida de Google Sheets.');
+        return;
+    }
+
+    const localList = readConfirmations();
+    renderTable(localList);
+    if (sheetUrl) {
+        setSourceInfo('Fuente: lista local de respaldo (no se pudo leer la hoja compartida).');
+    } else {
+        setSourceInfo('Fuente: lista local de respaldo.');
+    }
+}
