@@ -864,6 +864,10 @@ section {
     text-align: left;
 }
 
+.companion-hidden {
+    display: none;
+}
+
 .form-group label {
     display: block;
     margin-bottom: var(--spacing-sm);
