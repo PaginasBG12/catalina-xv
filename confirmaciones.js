@@ -40,6 +40,7 @@ function renderTable(confirmations) {
                 <td>${item.name || '-'}</td>
                 <td>${item.attendance || '-'}</td>
                 <td>${item.guests || '-'}</td>
+                <td>${item.companionNames || '-'}</td>
                 <td>${item.songSuggestion || '-'}</td>
                 <td>${item.message || '-'}</td>
             `;
@@ -87,12 +88,13 @@ function exportCsv() {
     const confirmations = currentRenderedConfirmations;
     if (!confirmations.length) return;
 
-    const header = ['Fecha', 'Nombre', 'Asistencia', 'Personas', 'Cancion', 'Mensaje'];
+    const header = ['Fecha', 'Nombre', 'Asistencia', 'Personas', 'Acompanantes', 'Cancion', 'Mensaje'];
     const rows = confirmations.map((item) => [
         item.createdAt || '',
         item.name || '',
         item.attendance || '',
         item.guests || '',
+        item.companionNames || '',
         item.songSuggestion || '',
         item.message || ''
     ]);

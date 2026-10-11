@@ -23,8 +23,9 @@ function doGet(e) {
       name: toSafeString_(values[i][1]),
       attendance: toSafeString_(values[i][2]),
       guests: toSafeString_(values[i][3]),
-      songSuggestion: toSafeString_(values[i][4]),
-      message: toSafeString_(values[i][5])
+      companionNames: toSafeString_(values[i][4]),
+      songSuggestion: toSafeString_(values[i][5]),
+      message: toSafeString_(values[i][6])
     });
   }
 
@@ -50,6 +51,7 @@ function doPost(e) {
     toSafeString_(params.name),
     toSafeString_(params.attendance),
     toSafeString_(params.guests),
+    toSafeString_(params.companionNames),
     toSafeString_(params.songSuggestion),
     toSafeString_(params.message)
   ]);
@@ -68,7 +70,7 @@ function getOrCreateSheet_() {
   }
 
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["Fecha", "Nombre", "Asistencia", "Personas", "Cancion", "Mensaje"]);
+    sheet.appendRow(["Fecha", "Nombre", "Asistencia", "Personas", "Acompanantes", "Cancion", "Mensaje"]);
   }
 
   return sheet;

@@ -151,6 +151,40 @@ function initFormValidation() {
     const form = document.getElementById('confirmationForm');
     if (!form) return;
 
+    const attendanceField = document.getElementById('attendance');
+    const guestsField = document.getElementById('guests');
+
+    function toggleCompanionNamesField() {
+        const companionGroup = document.getElementById('companionNamesGroup');
+        const companionField = document.getElementById('companionNames');
+        if (!companionGroup || !companionField || !attendanceField || !guestsField) return;
+
+        const attendanceValue = attendanceField.value;
+        const guestsCount = parseInt(guestsField.value || '0', 10);
+        const shouldShow = attendanceValue === 'Sí, voy a asistir' && guestsCount > 1;
+
+        companionGroup.style.display = shouldShow ? 'block' : 'none';
+        companionField.required = shouldShow;
+
+        if (!shouldShow) {
+            companionField.value = '';
+            companionField.classList.remove('error');
+            const companionError = document.getElementById('companionNamesError');
+            if (companionError) {
+                companionError.textContent = '';
+                companionError.classList.remove('show');
+            }
+        }
+    }
+
+    if (attendanceField) {
+        attendanceField.addEventListener('change', toggleCompanionNamesField);
+    }
+    if (guestsField) {
+        guestsField.addEventListener('change', toggleCompanionNamesField);
+    }
+    toggleCompanionNamesField();
+
     // Validar al hacer cambios en los campos
     const inputs = form.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
@@ -206,6 +240,20 @@ function validateField(field) {
         }
     }
 
+    // Validar nombres de acompañantes cuando corresponde
+    if (fieldName === 'companionNames') {
+        const attendanceField = document.getElementById('attendance');
+        const guestsField = document.getElementById('guests');
+        const attendanceValue = attendanceField ? attendanceField.value : '';
+        const guestsCount = parseInt((guestsField && guestsField.value) || '0', 10);
+        const isRequired = attendanceValue === 'Sí, voy a asistir' && guestsCount > 1;
+
+        if (isRequired && !fieldValue) {
+            isValid = false;
+            errorMessage = 'Ingresá el nombre de las personas que te acompañan.';
+        }
+    }
+
     // Actualizar UI
     if (isValid) {
         field.classList.remove('error');
@@ -229,6 +277,7 @@ function validateForm() {
     const nameField = document.getElementById('name');
     const attendanceField = document.getElementById('attendance');
     const guestsField = document.getElementById('guests');
+    const companionNamesField = document.getElementById('companionNames');
 
     let isFormValid = true;
 
@@ -236,6 +285,9 @@ function validateForm() {
     isFormValid &= validateField(nameField);
     isFormValid &= validateField(attendanceField);
     isFormValid &= validateField(guestsField);
+    if (companionNamesField) {
+        isFormValid &= validateField(companionNamesField);
+    }
 
     return isFormValid;
 }
@@ -250,6 +302,7 @@ async function submitForm() {
         name: (formData.get('name') || '').toString().trim(),
         attendance: (formData.get('attendance') || '').toString().trim(),
         guests: (formData.get('guests') || '').toString().trim(),
+        companionNames: (formData.get('companionNames') || '').toString().trim(),
         message: (formData.get('message') || '').toString().trim(),
         songSuggestion: (formData.get('songSuggestion') || '').toString().trim(),
         createdAt: new Date().toLocaleString('es-UY', { timeZone: 'America/Montevideo' })
@@ -310,6 +363,7 @@ async function sendConfirmationToGoogleSheet(googleSheetUrl, confirmation) {
         name: confirmation.name || '',
         attendance: confirmation.attendance || '',
         guests: confirmation.guests || '',
+        companionNames: confirmation.companionNames || '',
         songSuggestion: confirmation.songSuggestion || '',
         message: confirmation.message || ''
     });
