@@ -154,14 +154,29 @@ function initFormValidation() {
     const attendanceField = document.getElementById('attendance');
     const guestsField = document.getElementById('guests');
 
+    function normalizeText(value) {
+        return (value || '')
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .trim();
+    }
+
+    function isCompanionNamesRequired() {
+        const attendanceValue = attendanceField ? attendanceField.value : '';
+        const guestsCount = parseInt((guestsField && guestsField.value) || '0', 10);
+        const normalizedAttendance = normalizeText(attendanceValue);
+        const isAttending = normalizedAttendance.includes('si, voy a asistir') || normalizedAttendance.includes('si voy a asistir');
+        return isAttending && guestsCount > 1;
+    }
+
     function toggleCompanionNamesField() {
         const companionGroup = document.getElementById('companionNamesGroup');
         const companionField = document.getElementById('companionNames');
         if (!companionGroup || !companionField || !attendanceField || !guestsField) return;
 
-        const attendanceValue = attendanceField.value;
-        const guestsCount = parseInt(guestsField.value || '0', 10);
-        const shouldShow = attendanceValue === 'Sí, voy a asistir' && guestsCount > 1;
+        const shouldShow = isCompanionNamesRequired();
 
         companionGroup.style.display = shouldShow ? 'block' : 'none';
         companionField.required = shouldShow;
@@ -246,7 +261,13 @@ function validateField(field) {
         const guestsField = document.getElementById('guests');
         const attendanceValue = attendanceField ? attendanceField.value : '';
         const guestsCount = parseInt((guestsField && guestsField.value) || '0', 10);
-        const isRequired = attendanceValue === 'Sí, voy a asistir' && guestsCount > 1;
+        const normalizedAttendance = (attendanceValue || '')
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .trim();
+        const isRequired = (normalizedAttendance.includes('si, voy a asistir') || normalizedAttendance.includes('si voy a asistir')) && guestsCount > 1;
 
         if (isRequired && !fieldValue) {
             isValid = false;
@@ -328,6 +349,16 @@ async function submitForm() {
         inputs.forEach(input => {
             input.classList.remove('error');
         });
+
+        const companionGroup = document.getElementById('companionNamesGroup');
+        const companionField = document.getElementById('companionNames');
+        const companionError = document.getElementById('companionNamesError');
+        if (companionGroup) companionGroup.style.display = 'none';
+        if (companionField) companionField.required = false;
+        if (companionError) {
+            companionError.textContent = '';
+            companionError.classList.remove('show');
+        }
     }, 3000);
 }
 
