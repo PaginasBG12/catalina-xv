@@ -1,6 +1,7 @@
 const STORAGE_KEY = 'catalinaXVConfirmaciones';
 const SHEET_URL_KEY = 'catalinaXVSheetApiUrl';
-const DEFAULT_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCO-RYlS0zyePyXC9mYuSBLq5JAqTUDeaIlW_qqX4rr6UWbpv0h2BxF96CJBsNg7EnCQ/exec';
+const DEFAULT_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx6j_jcZFHgqG1VQ-LDfiJ8HSXpJ__eAQHXKjzwa58UKNhQIBBLV4fIc3d2yF5hkkbz/exec';
+const LEGACY_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCO-RYlS0zyePyXC9mYuSBLq5JAqTUDeaIlW_qqX4rr6UWbpv0h2BxF96CJBsNg7EnCQ/exec';
 let currentRenderedConfirmations = [];
 
 function readConfirmations() {
@@ -76,6 +77,10 @@ function saveSheetUrl(url) {
 
 function getSheetUrl() {
     const saved = (localStorage.getItem(SHEET_URL_KEY) || '').trim();
+    if (saved === LEGACY_SHEET_URL) {
+        localStorage.setItem(SHEET_URL_KEY, DEFAULT_SHEET_URL);
+        return DEFAULT_SHEET_URL;
+    }
     return saved || DEFAULT_SHEET_URL;
 }
 
@@ -150,7 +155,7 @@ async function hydrateList() {
     const sheetUrl = getSheetUrl();
     const sharedList = await readSharedConfirmations(sheetUrl);
 
-    if (sharedList && sharedList.length) {
+    if (sharedList !== null) {
         renderTable(sharedList);
         setSourceInfo('Fuente: hoja compartida de Google Sheets.');
         return;

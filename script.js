@@ -369,14 +369,25 @@ async function sendConfirmationToGoogleSheet(googleSheetUrl, confirmation) {
     });
 
     try {
-        await fetch(googleSheetUrl, {
+        const response = await fetch(googleSheetUrl, {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             body: payload.toString()
         });
+
+        if (!response.ok) {
+            console.error('Respuesta HTTP no OK de Google Sheets:', response.status);
+            return false;
+        }
+
+        const data = await response.json().catch(() => null);
+        if (!data || data.ok !== true) {
+            console.error('Respuesta invalida de Google Sheets:', data);
+            return false;
+        }
+
         return true;
     } catch (error) {
         console.error('No se pudo enviar a Google Sheets:', error);
