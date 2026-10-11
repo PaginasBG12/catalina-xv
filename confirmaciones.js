@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'catalinaXVConfirmaciones';
 const SHEET_URL_KEY = 'catalinaXVSheetApiUrl';
+const DEFAULT_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCO-RYlS0zyePyXC9mYuSBLq5JAqTUDeaIlW_qqX4rr6UWbpv0h2BxF96CJBsNg7EnCQ/exec';
 let currentRenderedConfirmations = [];
 
 function readConfirmations() {
@@ -73,7 +74,8 @@ function saveSheetUrl(url) {
 }
 
 function getSheetUrl() {
-    return (localStorage.getItem(SHEET_URL_KEY) || '').trim();
+    const saved = (localStorage.getItem(SHEET_URL_KEY) || '').trim();
+    return saved || DEFAULT_SHEET_URL;
 }
 
 function setSourceInfo(text) {
