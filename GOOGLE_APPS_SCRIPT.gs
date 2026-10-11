@@ -1,6 +1,6 @@
 var SPREADSHEET_ID = 'PEGAR_ID_DE_TU_GOOGLE_SHEET';
 var SHEET_NAME = 'Respuestas';
-var ADMIN_CLEAR_KEY = 'CAMBIAR_ESTA_CLAVE';
+var ADMIN_CLEAR_KEY = 'CATA';
 
 function doGet(e) {
   try {
