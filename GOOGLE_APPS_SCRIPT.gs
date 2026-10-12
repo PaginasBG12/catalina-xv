@@ -56,13 +56,19 @@ function doPost(e) {
 
     var sheet = getOrCreateSheet_();
 
+    var name = normalizeText_(params.name);
     var attendance = toSafeString_(params.attendance);
     var guests = normalizeGuestCount_(params.guests);
     var companionNames = normalizeCompanionNames_(params.companionNames);
+    var validationError = validateSubmission_(name, attendance, guests, companionNames);
+
+    if (validationError) {
+      return json_({ ok: false, error: validationError });
+    }
 
     sheet.appendRow([
       normalizeCreatedAt_(params.createdAt),
-      normalizeText_(params.name),
+      name,
       attendance,
       guests,
       companionNames,
@@ -162,6 +168,22 @@ function normalizeText_(value) {
 function isAttending_(attendance) {
   var txt = toSafeString_(attendance).toLowerCase();
   return txt.indexOf('si, voy a asistir') !== -1 || txt.indexOf('si voy a asistir') !== -1 || txt === 'si';
+}
+
+function validateSubmission_(name, attendance, guests, companionNames) {
+  if (!name || name.length < 3) {
+    return 'El nombre es obligatorio y debe tener al menos 3 caracteres.';
+  }
+
+  if (!attendance) {
+    return 'La asistencia es obligatoria.';
+  }
+
+  if (isAttending_(attendance) && guests > 1 && !companionNames) {
+    return 'Si asisten mas de 1 persona, ingresa los nombres de acompanantes.';
+  }
+
+  return '';
 }
 
 function json_(payload) {
