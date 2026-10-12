@@ -1,7 +1,10 @@
 const STORAGE_KEY = 'catalinaXVConfirmaciones';
 const SHEET_URL_KEY = 'catalinaXVSheetApiUrl';
-const DEFAULT_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx6j_jcZFHgqG1VQ-LDfiJ8HSXpJ__eAQHXKjzwa58UKNhQIBBLV4fIc3d2yF5hkkbz/exec';
-const LEGACY_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxCO-RYlS0zyePyXC9mYuSBLq5JAqTUDeaIlW_qqX4rr6UWbpv0h2BxF96CJBsNg7EnCQ/exec';
+const DEFAULT_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwjiff6U-SMJe_ERRJpYDqG1pr08WFTa5eP5N2DYny2-2l4h12hawwqJfEXpN93rb5d/exec';
+const LEGACY_SHEET_URLS = [
+    'https://script.google.com/macros/s/AKfycbx6j_jcZFHgqG1VQ-LDfiJ8HSXpJ__eAQHXKjzwa58UKNhQIBBLV4fIc3d2yF5hkkbz/exec',
+    'https://script.google.com/macros/s/AKfycbxCO-RYlS0zyePyXC9mYuSBLq5JAqTUDeaIlW_qqX4rr6UWbpv0h2BxF96CJBsNg7EnCQ/exec'
+];
 let currentRenderedConfirmations = [];
 
 function readConfirmations() {
@@ -77,7 +80,7 @@ function saveSheetUrl(url) {
 
 function getSheetUrl() {
     const saved = (localStorage.getItem(SHEET_URL_KEY) || '').trim();
-    if (saved === LEGACY_SHEET_URL) {
+    if (LEGACY_SHEET_URLS.includes(saved)) {
         localStorage.setItem(SHEET_URL_KEY, DEFAULT_SHEET_URL);
         return DEFAULT_SHEET_URL;
     }

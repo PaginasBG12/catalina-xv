@@ -1,5 +1,7 @@
 var SPREADSHEET_ID = '1VgfBmmvZU-oJj7q-BhnF68x3Etmm5YyGeuCFzUcEyjw';
 var SHEET_NAME = 'Respuestas';
+var HEADERS = ["Fecha", "Nombre", "Asistencia", "Personas", "Acompanantes", "Cancion", "Mensaje"];
+var COLUMN_WIDTHS = [170, 220, 200, 95, 280, 260, 320];
 
 function doGet(e) {
   try {
@@ -54,15 +56,25 @@ function doPost(e) {
 
     var sheet = getOrCreateSheet_();
 
+    var attendance = toSafeString_(params.attendance);
+    var guests = normalizeGuestCount_(params.guests);
+    var companionNames = normalizeCompanionNames_(params.companionNames);
+
     sheet.appendRow([
-      toSafeString_(params.createdAt),
-      toSafeString_(params.name),
-      toSafeString_(params.attendance),
-      toSafeString_(params.guests),
-      toSafeString_(params.companionNames),
-      toSafeString_(params.songSuggestion),
-      toSafeString_(params.message)
+      normalizeCreatedAt_(params.createdAt),
+      normalizeText_(params.name),
+      attendance,
+      guests,
+      companionNames,
+      normalizeText_(params.songSuggestion),
+      normalizeText_(params.message)
     ]);
+
+    // Si no asiste o viene solo, no se necesitan acompanantes.
+    var lastRow = sheet.getLastRow();
+    if (!isAttending_(attendance) || guests <= 1) {
+      sheet.getRange(lastRow, 5).setValue("");
+    }
 
     return json_({ ok: true });
   } catch (error) {
@@ -85,9 +97,7 @@ function getOrCreateSheet_() {
     sheet = ss.insertSheet(SHEET_NAME);
   }
 
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["Fecha", "Nombre", "Asistencia", "Personas", "Acompanantes", "Cancion", "Mensaje"]);
-  }
+  ensureSheetLayout_(sheet);
 
   return sheet;
 }
@@ -101,6 +111,57 @@ function clearDataRows_(sheet) {
   var rowsToDelete = lastRow - 1;
   sheet.deleteRows(2, rowsToDelete);
   return rowsToDelete;
+}
+
+function ensureSheetLayout_(sheet) {
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(HEADERS);
+  } else {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
+
+  sheet.setFrozenRows(1);
+  for (var i = 0; i < COLUMN_WIDTHS.length; i++) {
+    sheet.setColumnWidth(i + 1, COLUMN_WIDTHS[i]);
+  }
+
+  var headerRange = sheet.getRange(1, 1, 1, HEADERS.length);
+  headerRange
+    .setFontWeight("bold")
+    .setHorizontalAlignment("center")
+    .setBackground("#f1f3f4")
+    .setWrap(true);
+
+  if (sheet.getLastRow() > 1) {
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, HEADERS.length).setVerticalAlignment("middle");
+  }
+}
+
+function normalizeCreatedAt_(value) {
+  var txt = normalizeText_(value);
+  if (txt) return txt;
+  return Utilities.formatDate(new Date(), 'America/Montevideo', 'yyyy-MM-dd HH:mm:ss');
+}
+
+function normalizeGuestCount_(value) {
+  var n = parseInt(toSafeString_(value), 10);
+  if (isNaN(n) || n < 1) return 1;
+  if (n > 8) return 8;
+  return n;
+}
+
+function normalizeCompanionNames_(value) {
+  var txt = normalizeText_(value);
+  return txt.replace(/\s*,\s*/g, ', ');
+}
+
+function normalizeText_(value) {
+  return toSafeString_(value).replace(/\s+/g, ' ').trim();
+}
+
+function isAttending_(attendance) {
+  var txt = toSafeString_(attendance).toLowerCase();
+  return txt.indexOf('si, voy a asistir') !== -1 || txt.indexOf('si voy a asistir') !== -1 || txt === 'si';
 }
 
 function json_(payload) {
