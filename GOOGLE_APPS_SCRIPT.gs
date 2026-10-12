@@ -166,7 +166,10 @@ function normalizeText_(value) {
 }
 
 function isAttending_(attendance) {
-  var txt = toSafeString_(attendance).toLowerCase();
+  var txt = normalizeText_(attendance)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
   return txt.indexOf('si, voy a asistir') !== -1 || txt.indexOf('si voy a asistir') !== -1 || txt === 'si';
 }
 
