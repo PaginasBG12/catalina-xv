@@ -1,4 +1,4 @@
-var SPREADSHEET_ID = 'PEGAR_ID_DE_TU_GOOGLE_SHEET';
+var SPREADSHEET_ID = '1VgfBmmvZU-oJj7q-BhnF68x3Etmm5YyGeuCFzUcEyjw';
 var SHEET_NAME = 'Respuestas';
 
 function doGet(e) {
